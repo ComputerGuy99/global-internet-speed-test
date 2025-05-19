@@ -5,12 +5,15 @@
 Most ISPs (Internet Service Providers) advertise the "max speed", more properly known as the max throughput of the internet connections they are selling and segment their offering using this metric.
 ISPs that offer FTTP (Fiber To The Premises) also heavily advertise the better reliability and symmetrical "speeds" that fiber media offers over copper (i.e. coax and twisted pair).
 Knowing that this is not the full story, I was always curious about the true capabilities of the internet services provided by various different ISPs around the world.
+
 I did lot's of research online. However, most of the information I found only focused on average download speeds with a few sources (primarily Ookla) also reporting on upload speeds and latency.
-I noticed that all ISPs in the USA are now required to list broadband facts for their internet services showing typical download and upload throughput as well as latency. However, none mention international throughput
-Some ISPs in Asia and Eastern Europe have information on expected throughput when connecting to international servers but it is often burried in the fineprint and not helpful as a comparison metric since most ISPs don't provide it.
+I noticed that all ISPs in the USA are now required to list broadband facts for their internet services showing typical download and upload throughput as well as latency. However, none mention international throughput.
+Some ISPs in Asia and Eastern Europe have information on expected throughput when connecting to international servers but it is often buried in the fineprint and not helpful as a comparison metric since most ISPs don't provide it.
+
 One flaw I noticed with all of the sources I refered to was that the data was collected by having users perform tests in ideal conditions.
 Most internet connection testing websites would run tests by selecting and only using the best/closest servers to the user's ISP's edge network. In some cases test servers would even be located inside the ISP's own network.
 As someone who has a above average grasp on how the internet works and who has experienced poor performance when accessing servers on the other side of the world, I knew there was more to be discovered.
+
 Thus, I decided to try to test how good my ISPs peering and transit connections as well as their routing is to various destinations all around the world.
 Ookla has a network of 15000+ speed test servers all around the world, many of which live inside the networks of major ISPs.
 Thus, I figured that connecting to and running tests against ookla servers all around the world would give me a good idea of how good my ISP's connectivity is to various other ISPs and hence servers around the world.
@@ -18,23 +21,23 @@ Thus, I figured that connecting to and running tests against ookla servers all a
 ## Purpose
 
 The goal of this project is to allow people to test their ISP's international connectivity and hence better understand the capabilities and limitations of their internet connection and by extension their ISP's network.
-This information could help people pick between different ISPs advertising the same types of service, and help businesses and individuals using site-to-site VPNs and remotely accessing sites around the world rule out issues with their setup.
-Furthermore, it could help people around the world better understand which ISPs provide good connectivity and which ones do not. I know all of this seems very optimistic and that there are better tools out there for diagnosing connectivity issues.
-However, no tool I have found provides visual output that comes close to what I have built with this project 
+This information could help people pick between different ISPs advertising the same types of service, and help businesses and individuals using site-to-site VPNs and remotely accessing sites around the world rule out issues with their setup. I know there are better tools fit for diagnosing the root cause of connectivity issues.
+
+The issue with existing tools is that they work on a micro level helping pinpoint the issues of a given connection or link. This project aims to provide a tool that works on a more broad macro level. I want to help people around the world better understand and visualize which ISPs provide good connectivity and which ones do not. No tool I have found thus far provides visuals that comes close to what I have built with this project 
 
 ## Running the Test
 
-1. You will need a list of the ookla speed test servers around the world.
+1. You will need a list of the ookla speed test servers around the world. 
 
 I found the resources below very helpful:
-https://williamyaps.github.io/wlmjavascript/servercli.html -> static list. Contains many servers which no longer work
-https://github.com/alcayaga/speedtest-servers -> this repo contains a script which builds a list of speed test servers using data fetched from ookla. I opted for this route.
-Note: Running the script link above can take a few hours!
+* https://williamyaps.github.io/wlmjavascript/servercli.html -> static list. Contains many servers which no longer work
+* https://github.com/alcayaga/speedtest-servers -> this repo contains a script which builds a list of speed test servers using data fetched from ookla. I opted for this route and generated `speedtest_servers_second_run.csv`.
+Note: Running the script linked above can take a few hours!
 
-2. Install speedtest-cli from Ookla's website and run the command below from your terminal. Ensure this works before proceeding:
+2. Install speedtest-cli from Ookla's website (https://www.speedtest.net/apps/cli) and run the command below from your terminal. Ensure this works before proceeding:
 speedtest --server-id=15116 --selection-details --format=csv --output-header
 
-3. Run the `global_internet_speed_test_enhanced.py` script using the list of servers download in the first step as the input file
+3. Run the `global_internet_speed_test_enhanced.py` script using the list of servers downloaded in the first step as the input file
 Note: speedtest-cli is rate limited to 30 tests per hour. I do not believe rate limiting is based on IP address since I was able to run speedtest-cli on a second system with the same public IP address as the first while the first was rate limited.
 I used one system to run the script and due to the rate limiting it took the script about 10 days to perform testing for ~5100 servers I had in my list from step 1.
 
@@ -45,7 +48,7 @@ Note: before running this script you will want to open your output file in a tex
 5. The `find_failed_tests.py` file will output a UPDATED copy of your data as well as a skipped_servers file containing a list of servers for which testing failed
 
 6. You may retry testing for the skipped servers by taking the skipped_servers file, going back to step 3 and re-running `global_internet_speed_test_enhanced.py` using skipped_servers as input. 
-Once you get to step 5. You can concatenate the two UPDATED copies of your output data (one copy from the first run, and one copy for the rerun for the skipped_servers)
+Once you get to step 5. You can concatenate the two UPDATED copies of your output data (one copy from the first run, and one copy from the rerun for the skipped_servers)
 
 7. Make sure you have downloaded `world-administrative-boundaries.geojson`. Open it and replace all instances of `null` with `"None"`
 source: https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export
