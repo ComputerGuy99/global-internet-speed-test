@@ -48,7 +48,7 @@ Note: before running this script you will want to open your output file in a tex
 5. The `find_failed_tests.py` file will output a UPDATED copy of your data as well as a skipped_servers file containing a list of servers for which testing failed
 
 6. You may retry testing for the skipped servers by taking the skipped_servers file, going back to step 3 and re-running `global_internet_speed_test_enhanced.py` using skipped_servers as input. 
-Once you get to step 5. You can concatenate the two UPDATED copies of your output data (one copy from the first run, and one copy from the rerun for the skipped_servers)
+Once you get to step 5. You can concatenate the two UPDATED copies of your output data (one copy from the first run, and one copy from the rerun for the skipped_servers) using the `merge_test_files.py` script.
 
 7. Make sure you have downloaded `world-administrative-boundaries.geojson`. Open it and replace all instances of `null` with `"None"`
 source: https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries/export
