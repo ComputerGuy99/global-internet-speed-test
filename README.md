@@ -59,6 +59,10 @@ source: https://public.opendatasoft.com/explore/dataset/world-administrative-bou
 
 10. Share your findings with the world !!!
 
+## Sample Output
+
+A sample map generating using the above instructions can be found at the following URL: https://computerguy99.github.io/global-internet-speed-test/sample_map
+
 ## Future Goals
 
 1. Find a way to run multiple instances of the `global_internet_speed_test_enhanced.py` script on multiple systems that can talk to each other using IPC in order to speed up testing by allowing a different system to run tests while others are rate limited.
@@ -66,7 +70,7 @@ The key to making this work is to ensure that only one system is ever running te
 
 2. Identify other endpoints apart from Ookla speed test servers that can be used for testing at a global scale and add support for them in the script.
 
-3. Collect and analyze data about multiple ISPs by running this test from multiple places around the world.
+3. Collect and analyze data about multiple ISPs by running this test from different geographical locations and ISP networks around the world.
 
 ## Licensing
 
